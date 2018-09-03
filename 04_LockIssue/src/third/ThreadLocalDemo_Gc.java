@@ -15,6 +15,7 @@ public class ThreadLocalDemo_Gc {
     };
 
     static volatile CountDownLatch cd = new CountDownLatch(10000);
+
     public static class ParseDate implements Runnable {
         int i = 0;
 
@@ -25,16 +26,15 @@ public class ThreadLocalDemo_Gc {
         @Override
         public void run() {
             try {
-
                 if (t1.get() == null) {
-                    t1.set(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"){
-                    protected void finalize() throws Throwable {
-                        System.out.println(this.toString() + "is  gc");
-                    }
-                });
-                System.out.println(Thread.currentThread().getId() + ":create SimpleDateFormat");
-            }
-                Date t = t1.get().parse("2015-03-29 19:29:" + i%60);
+                    t1.set(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") {
+                        protected void finalize() throws Throwable {
+                            System.out.println(this.toString() + "is  gc");
+                        }
+                    });
+                    System.out.println(Thread.currentThread().getId() + ":create SimpleDateFormat");
+                }
+                Date t = t1.get().parse("2015-03-29 19:29:" + i % 60);
             } catch (ParseException e) {
                 e.printStackTrace();
             } finally {

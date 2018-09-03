@@ -17,7 +17,6 @@ public class DamenDemo {
         Thread thread = new DaemonT();
         thread.setDaemon(true);
         thread.start();
-
         Thread.sleep(2000);
     }
 }
